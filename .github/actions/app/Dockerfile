@@ -1,4 +1,4 @@
-FROM    php:7.2-apache
+FROM    php:7.2-cli
 
 ENV     APP_DIR=/usr/src/app/
 ENV     APP_DIR_DATA=/usr/src/app/data/
