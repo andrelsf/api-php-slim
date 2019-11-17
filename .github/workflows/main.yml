@@ -24,15 +24,9 @@ jobs:
       - run: sed -i 's/DB_NAME/$MYSQL_DATABASE/' $CONFIG_FILE
       - run: sed -i 's/DB_USER/$MYSQL_USER/' $CONFIG_FILE
       - run: sed -i 's/USER_PASSWORD/$MYSQL_PASSWORD/' $CONFIG_FILE
-  publish:
-    needs: build
-    name: Publish Docker Image
-    runs-on: ubuntu-18.04
-    steps:
-      - uses: actions/checkout@v1
       - uses: elgohr/Publish-Docker-Github-Action@master
         with:
           name: andrelsferreira/apiphpslim
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
-          workdir: ${{ GITHUB_WORKSPACE }}
+          workdir: $GITHUB_WORKSPACE
