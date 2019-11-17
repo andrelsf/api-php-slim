@@ -1,0 +1,6 @@
+vendor/
+data/
+logs/
+src/Config/config.local.php
+composer.lock
+.vscode
