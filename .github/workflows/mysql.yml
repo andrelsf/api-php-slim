@@ -7,6 +7,8 @@ jobs:
   build:
     name: Publish to Docker Repository
     runs-on: ubuntu-18.04
+    env:
+      MYSQL_ROOT_PASSWORD: ${{ secrets.MYSQL_ROOT_PASSWORD }}
     steps:
       - uses: actions/checkout@v1
       - uses: ./.github/actions/mysql
