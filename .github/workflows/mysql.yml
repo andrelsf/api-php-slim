@@ -8,8 +8,8 @@ jobs:
     name: Publish to Docker Repository
     runs-on: ubuntu-18.04
     steps:
-      - uses: elgohr/Publish-Docker-Github-Action@master
       - uses: ./github/actions/mysql
+      - uses: elgohr/Publish-Docker-Github-Action@master
         with:
           name: andrelsferreira/mysql
           username: ${{ secrets.DOCKER_USERNAME }}
