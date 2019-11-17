@@ -24,8 +24,6 @@ jobs:
       - run: sed -i 's/DB_NAME/$MYSQL_DATABASE/' $CONFIG_FILE
       - run: sed -i 's/DB_USER/$MYSQL_USER/' $CONFIG_FILE
       - run: sed -i 's/USER_PASSWORD/$MYSQL_PASSWORD/' $CONFIG_FILE
-
-jobs:
   publish:
     name: Publish Docker Image
     runs-on: ubuntu-18.04
