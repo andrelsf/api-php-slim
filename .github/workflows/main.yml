@@ -24,6 +24,7 @@ jobs:
       - run: sed -i 's/DB_NAME/$MYSQL_DATABASE/' $CONFIG_FILE
       - run: sed -i 's/DB_USER/$MYSQL_USER/' $CONFIG_FILE
       - run: sed -i 's/USER_PASSWORD/$MYSQL_PASSWORD/' $CONFIG_FILE
+      - run: pwd
       - uses: elgohr/Publish-Docker-Github-Action@master
         with:
           name: andrelsferreira/apiphpslim
