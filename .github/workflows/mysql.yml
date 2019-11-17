@@ -8,6 +8,7 @@ jobs:
     name: Publish to Docker Repository
     runs-on: ubuntu-18.04
     steps:
+      - uses: actions/checkout@v1
       - uses: ./github/actions/mysql
       - uses: elgohr/Publish-Docker-Github-Action@master
         with:
