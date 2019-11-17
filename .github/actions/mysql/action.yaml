@@ -1,0 +1,5 @@
+name: "MySQL 5.7"
+description: "Build image MySQL 5.7"
+run:
+  using: 'Docker'
+  image: 'Dockerfile'
