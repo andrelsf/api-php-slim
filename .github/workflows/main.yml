@@ -1,0 +1,11 @@
+name: API PHP Slim Workflow
+on: 
+  push:
+    - develop
+
+jobs:
+  build:
+    name: API build
+    runs-on: ubuntu-18.04
+    steps:
+      - uses: action/checkout@v1 
