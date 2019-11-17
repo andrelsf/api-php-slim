@@ -6,8 +6,6 @@ ENV     APP_DIR_LOGS=/usr/src/app/logs/
 ENV     APP_USER=app
 
 RUN     docker-php-ext-install pdo pdo_mysql \
-        #&& a2enmod rewrite \
-        && service apache2 restart \
         && mkdir -p ${APP_DIR} \
         && mkdir -p ${APP_DIR_DATA} \
         && mkdir -p ${APP_DIR_LOGS}
