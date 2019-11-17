@@ -1,3 +1,3 @@
-FROM    composer:latest
+FROM    composer:latest AS build
 
 CMD     [ "composer", "install" ]

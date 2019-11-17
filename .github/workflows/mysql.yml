@@ -9,6 +9,9 @@ jobs:
     runs-on: ubuntu-18.04
     env:
       MYSQL_ROOT_PASSWORD: ${{ secrets.MYSQL_ROOT_PASSWORD }}
+      MYSQL_DATABASE: ${{ secrets.MYSQL_DATABASE }}
+      MYSQL_USER: ${{ secrets.MYSQL_USER }}
+      MYSQL_PASSWORD: ${{ secrets.MYSQL_PASSWORD }}
     steps:
       - uses: actions/checkout@v1
       - uses: ./.github/actions/mysql
