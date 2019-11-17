@@ -12,20 +12,4 @@ return [
         'user' => 'DB_USER',
         'password' => 'USER_PASSWORD',
     ],
-    'jwt' => [
-        'secret' => 'YOUR_SECRET',
-        'path' => [
-            "/endpoints1", "/endpoints2"
-        ],
-        'passthrough' => '/auth',
-        'header' => 'Authorization', // Authorization or X-Token
-        'algorithm' => [
-            "RS256"
-        ],
-        'attribute' => false,
-        'secure' => true,
-        'relaxed' => [
-            "localhost", "dev.apislim.com"
-        ],
-    ],
 ];

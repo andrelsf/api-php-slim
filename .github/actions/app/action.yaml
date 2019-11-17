@@ -1,0 +1,5 @@
+name: "Apache PHP 7.2 Install"
+description: "Build APP"
+run:
+  using: 'Docker'
+  image: 'Dockerfile'
