@@ -12,6 +12,8 @@ RUN     docker-php-ext-install pdo pdo_mysql \
         && mkdir -p ${APP_DIR_DATA} \
         && mkdir -p ${APP_DIR_LOGS}
 
+ADD     . ${APP_DIR}
+
 RUN     useradd -M -s /bin/bash ${APP_USER} \
         && chown ${APP_USER}. ${APP_DIR} -R \
         && chown 33.33 ${APP_DIR_DATA} -R \
