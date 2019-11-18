@@ -17,7 +17,7 @@ RUN     useradd -M -s /bin/bash ${APP_USER} \
         && chown 33.33 ${APP_DIR_DATA} -R \
         && chown 33.33 ${APP_DIR_LOGS} -R
 
-ADD     ./app.default.conf /etc/apache2/sites-enabled/000-default.conf
+ADD     ./.github/actions/app/app.default.conf /etc/apache2/sites-enabled/000-default.conf
 
 EXPOSE  80
 
