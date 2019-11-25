@@ -11,18 +11,14 @@ jobs:
     env:
       CONFIG_FILE: ./src/Config/config.local.php
       CONFIG_FILE_EXAMPLE: ./src/Config/config.local.php.example
-      MYSQL_HOST: ${{ secrets.MYSQL_HOST }}
-      MYSQL_DATABASE: ${{ secrets.MYSQL_DATABASE }}
-      MYSQL_USER: ${{ secrets.MYSQL_USER }}
-      MYSQL_PASSWORD: ${{ secrets.MYSQL_PASSWORD }}
     steps:
       - uses: actions/checkout@v1
       - uses: ./.github/actions/composer
       - run: cp $CONFIG_FILE_EXAMPLE $CONFIG_FILE
-      - run: sed -i 's/IP_DB/$MYSQL_HOST/' $CONFIG_FILE
-      - run: sed -i 's/DB_NAME/$MYSQL_DATABASE/' $CONFIG_FILE
-      - run: sed -i 's/DB_USER/$MYSQL_USER/' $CONFIG_FILE
-      - run: sed -i 's/USER_PASSWORD/$MYSQL_PASSWORD/' $CONFIG_FILE
+      - run: sed -i 's/IP_DB/${{ secrets.MYSQL_HOST }}/' $CONFIG_FILE
+      - run: sed -i 's/DB_NAME/${{ secrets.MYSQL_DATABASE }}/' $CONFIG_FILE
+      - run: sed -i 's/DB_USER/${{ secrets.MYSQL_USER }}/' $CONFIG_FILE
+      - run: sed -i 's/USER_PASSWORD/${{ secrets.MYSQL_PASSWORD }}/' $CONFIG_FILE
       - run: docker build . --file ./.github/actions/app/Dockerfile -t phpslim:7.2-apache
       - uses: elgohr/Publish-Docker-Github-Action@master
         with:
