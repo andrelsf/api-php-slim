@@ -1,5 +1,0 @@
-name: "MySQL Image"
-description: "Build image MySQL"
-run:
-  using: 'Docker'
-  image: 'Dockerfile'

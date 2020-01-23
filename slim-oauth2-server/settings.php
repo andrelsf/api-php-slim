@@ -19,11 +19,11 @@ return [
             'connection' => [
                 'driver'    => $database['mysql']['driver'],
                 'host'      => $database['mysql']['host'],
-                'port'      => (int)$database['mysql']['port'],
+                'port'      => (int) $database['mysql']['port'],
                 'dbname'    => $database['mysql']['dbname'],
                 'user'      => $database['mysql']['user'],
                 'password'  => $database['mysql']['password'],
-                'charset'   => $database['mysql']['charset']
+                //'charset'   => $database['mysql']['charset']
             ]
         ],
         'logger' => [

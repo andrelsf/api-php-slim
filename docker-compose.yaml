@@ -1,0 +1,45 @@
+version: "3.7"
+
+networks:
+    netoauth:
+      name: net-oauth2
+      driver: bridge
+      ipam:
+        driver: default
+        config:
+         - subnet: 172.72.0.0/24
+
+services:
+  oauth2_server:
+    hostname: oauth2-server
+    build: ./.docker/apache
+    env_file:
+      - ./slim-oauth2-server/.env
+    volumes:
+      - ./slim-oauth2-server:/usr/src/app
+    ports:
+      - "80:80"
+    links:
+      - mysql_server
+    restart:
+      on-failure
+    extra_hosts:
+      - "mysql-server:172.72.0.3"
+    networks:
+      netoauth:
+        ipv4_address: "172.72.0.2"
+
+  mysql_server:
+    hostname: mysql-server
+    build: ./.docker/mysql/docker
+    env_file:
+      - ./.docker/mysql/.env
+    volumes:
+      - ./.docker/mysql/data:/var/lib/mysql
+    expose:
+      - 3306
+    restart:
+      on-failure
+    networks:
+      netoauth:
+        ipv4_address: "172.72.0.3"

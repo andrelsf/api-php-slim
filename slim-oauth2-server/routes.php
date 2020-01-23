@@ -1,8 +1,28 @@
 <?php
 
 /**
- * Realizando o agrupamento dos endpoints iniciados por api
+ * Realizando o agrupamento dos endpoints
  */
+
+//use OAuth2\Request;
+
+/**
+ * Oauth2 Group
+ */
+$app->group('/oauth', function() 
+{
+    $this->group('/generateToken', function () {
+        $this->post('', 'App\api\Controllers\OAuthController:generateToken');
+    });
+
+    $this->group('/validateToken', function() {
+        $this->get('', 'App\api\Controllers\OAuthController:validateToken');
+    });
+});
+
+ /**
+  * API Group
+  */
 $app->group('/api', function()
 {
     /**

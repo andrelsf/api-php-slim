@@ -1,0 +1,33 @@
+{    
+    "listeners": {
+        "*:8081": {
+            "pass": "applications/oauth2-server" 
+        } 
+    },    
+    "applications": {
+        "oauth2-server": { 
+            "type": "php",
+            "processes": 4,
+            "root": "/usr/src/app/public",
+            "options": {
+                "admin": {
+                    "memory_limit": "256M"
+                },
+                "user": {
+                    "display_errors": "1"
+                }
+            }
+        } 
+    },
+    "routes": [
+        {
+            "match": {
+                "uri": "/api/*"
+            },
+
+            "action": {
+                "pass": "applications/oauth2-server"
+            }
+        }
+    ]
+}

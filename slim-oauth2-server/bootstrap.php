@@ -20,6 +20,8 @@ use Monolog\Handler\FingersCrossedHandler;
 use Monolog\Handler\StreamHandler;
 use Monolog\Logger;
 use Awurth\SlimValidation\Validator;
+use OAuth2\Autoloader;
+use OAuth2\Storage\Pdo;
 
 /**
  * Container Resources adiciona as definições
@@ -52,10 +54,10 @@ $container['logger'] = function($container)
  * Erros 404 - Not Fount
  * Handler Exceptions with errors 404
  */
-$container['notFoundHandler'] = function ($c) 
+$container['notFoundHandler'] = function ($container) 
 {
-    return function ($request, $response) use ($c) {
-        return $c['response']->withStatus(404)
+    return function ($request, $response) use ($container) {
+        return $container['response']->withStatus(404)
                              ->withHeader('Content-Type', 'application/json')
                              ->withJson(
                                  ['message' => 'Page not found']
@@ -66,10 +68,10 @@ $container['notFoundHandler'] = function ($c)
 /**
  * Error Handling returns status code 405 Method Not Allowed
  */
-$container['notAllowedHandler'] = function ($c) 
+$container['notAllowedHandler'] = function ($container) 
 {
-    return function ($request, $response, $methods) use ($c) {
-        return $c['response']->withStatus(405)
+    return function ($request, $response, $methods) use ($container) {
+        return $container['response']->withStatus(405)
                              ->withHeader('Allow', implode(', ', $methods))
                              ->withHeader('Content-Type', 'application/json')
                              ->withHeader('Access-control-Allow-Methods', implode(', ', $methods))
@@ -84,11 +86,12 @@ $container['notAllowedHandler'] = function ($c)
  * Handler de exceções
  * Retorna as exceções e codigos de status via JSON
  */
-$container['errorHandler'] = function ($c) 
+$container['errorHandler'] = function ($container) 
 {
-    return function ($request, $response, $exception) use ($c) {
+    return function ($request, $response, $exception) use ($container) {
         $statusCode = $exception->getCode() ? $exception->getCode() : 500;
-        return $c['response']->withStatus($statusCode)
+        
+        return $container['response']->withStatus($statusCode)
                              ->withHeader('Content-Type', 'application/json')
                              ->withJson(
                                     ['error' => $exception->getMessage()], 
@@ -109,7 +112,9 @@ $container[EntityManager::class] = function (Container $container): EntityManage
     );
 
     $config->setMetadataDriverImpl(
+        /** @var AnnotationDriver */
         new AnnotationDriver(
+            /** @var AnnotationReader */
             new AnnotationReader,
             $container['settings']['doctrine']['metadata_dirs']
         )
@@ -128,11 +133,34 @@ $container[EntityManager::class] = function (Container $container): EntityManage
 };
 
 /**
- * My UserRepository
+ * Repositories
  */
 $container[UserRepository::class] = function ($container) 
 {
     return new UserRepository($container[EntityManager::class]);
+};
+
+/**
+ * Implements Oauth2
+ */
+$container['OAuth2'] = function ($container) 
+{
+    $database = $container['settings']['doctrine']['connection'];
+
+    Autoloader::register();
+
+    $storage = new Pdo(
+        array(
+            'dsn' => "mysql:dbname=" . 
+                    $database['dbname'] . 
+                    ";host=" . $database['host'] . 
+                    ";port=" . $database['port'],
+            'username' => $database['user'],
+            'password' => $database['password']
+        )
+    );
+
+    return $storage;
 };
 
 /**
